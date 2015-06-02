@@ -1,15 +1,17 @@
 from PIL import Image
 from downloadFile import download
+import os
 
 heightOne = 1024
 weightOne = 1024
 heightFull = heightOne*3+536
 weightFull = weightOne*4+806
 pageStart = 648 #854
-pageEnd = 661#860
+pageEnd = 648#860
 # pages = 100
+pathToDirs = "./"
 url = "http://192.114.7.88:2121/iipsrv?FIF=/operational_storage/derivative_copies/2014/06/26/file_3%d/V1-FL12997%d.ptif&JTL=6,%d"
-tempFile = '/home/eli/Workspace/Concatenator/images/tempFile.jpg'
+tempFile = pathToDirs+'images/tempFile.jpg'
 
 new_im = Image.new('RGB', (weightFull,heightFull))
 
@@ -24,8 +26,8 @@ for page in range(pageStart,pageEnd):
                 continue
             im=Image.open(tempFile)
             new_im.paste(im,(j*weightOne,i*heightOne))
-    new_im.save('/home/eli/Workspace/Concatenator/output/Epage'+str(index)+'.jpg')
+    new_im.save(pathToDirs+'output/Epage'+str(index)+'.jpg')
     index+=1
 
-
+os.remove(tempFile)
 # new_im.show()
