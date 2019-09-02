@@ -1,5 +1,7 @@
+import urllib.request
+from typing import List
+
 from PIL import Image
-import urllib2
 import os
 from threading import Thread
 import math
@@ -24,13 +26,7 @@ class ProgInfo:
 
 
 def downloader(url, path):
-    request = urllib2.Request(url)
-    request.add_header('User-agent',
-                       "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.5) Gecko/20091102 Firefox/3.5.")
-    opener = urllib2.build_opener()
-    f = open(path, 'wb')
-    f.write(opener.open(request).read())
-    f.close()
+    urllib.request.urlretrieve(url, path)
 
 
 def handle_page(page, info):
@@ -77,7 +73,12 @@ def handle_several_pages(pages, info, return_list):
     # print('done pages: {}\n\n broken pages: {}'.format(done_pages, broken_pages))
 
 
-def run_simultaneously(all_pages, info):
+def run_simultaneously(all_pages, info: ProgInfo):
+    if not os.path.exists(info.path_to_output_dir):
+        os.makedirs(info.path_to_output_dir)
+    if not os.path.exists(info.path_to_download_dir):
+        os.makedirs(info.path_to_download_dir)
+
     num_of_pages = len(all_pages)
     num_pages_per_thread = int(math.ceil(float(num_of_pages) / info.num_of_threads))
 
@@ -101,4 +102,4 @@ def run_simultaneously(all_pages, info):
 
     all_broken_pages = [thread_res['broken'] for thread_res in threads_ret_val]
 
-    print all_broken_pages
+    print(all_broken_pages)

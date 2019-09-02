@@ -1,14 +1,4 @@
-from Concate import *
-
-# with open('special_pages.txt') as f:
-#     lines = f.readlines()
-# pairs = [line.split() for line in lines]
-# all_needed_pages = [int(pair[0]) for pair in pairs]
-# page_name_dict = { int(pair[0]): pair[1] for pair in pairs}
-# url_generator = lambda page_num, index_width, index_height: (
-# 	"https://digi.vatlib.it/pub/digit/MSS_Vat.ebr.60/iiif/Vat.ebr.60_%04u_fa_%s.jp2/%u,%u,512,512/512,/0/native.jpg" %
-# 	(page_num+7,page_name_dict[page_num],index_width*512,index_height*512)
-# 	)
+from concate import ProgInfo, run_simultaneously
 
 
 def url_generator(page_num, index_w, index_h):
